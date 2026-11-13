@@ -180,13 +180,7 @@ body::after {
     letter-spacing: -0.5px;
     line-height: 1.1;
     margin-bottom: 8px;
-}
-
-.titulo-principal span {
-    background: var(--grad-roxo);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    text-align: center; /* <-- Adicionado para centralizar com o mascote */
 }
 
 .subtitulo {
@@ -195,6 +189,7 @@ body::after {
     font-weight: 400;
     margin-bottom: 28px;
     line-height: 1.5;
+    text-align: center; /* <-- Adicionado para manter a harmonia */
 }
 
 /* Separador decorativo */
