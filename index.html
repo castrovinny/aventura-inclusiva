@@ -3,305 +3,445 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Aventura Inclusiva — Web App educacional lúdico e acessível para crianças. Suporte a Libras, alto contraste e modo motor.">
-    <meta name="theme-color" content="#2d1b69">
-    <title>Aventura Inclusiva 🌟 — Jogo Educativo</title>
+    <meta name="description" content="Aventura Inclusiva — Jogo educativo infantil lúdico e acessível (WCAG 2.2 AAA). 10 fases completas em Cores, Letramento, Objetos, Contagem e Libras com narração feminina suave e acolhedora!">
+    <meta name="theme-color" content="#6c5ce7">
+    <title>Aventura Inclusiva 🌟 — Jogo Educativo Infantil</title>
+
+    <!-- Tipografia Lúdica e Amigável (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+
+    <!-- Folha de Estilos do Jogo -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body id="corpo-pagina" class="modo-padrao">
 
-<div class="wrapper-central">
+    <!-- Camada de Efeitos Visuais (Confetes e Partículas Mágicas a 60 FPS) -->
+    <canvas id="canvas-confetes" aria-hidden="true"></canvas>
 
-    <!-- ================================================================
-         TELA 1 — BOAS-VINDAS E PERFIS DE ACESSIBILIDADE
-         ================================================================ -->
-    <div id="tela-inicio" class="tela ativa">
-        <div class="card-principal">
-            <div class="card-topo-deco"></div>
-            <div class="card-corpo">
-
-                <!-- Badge de boas-vindas -->
-                <div class="text-center">
-                    <span class="badge-bemvindo">
-                        <span>🌈</span> Bem-vindo(a) ao universo de aprendizado
-                    </span>
-                </div>
-
-                <!-- Mascote e Título -->
-                <div class="bloco-mascote">
-                    <div class="mascote-emoji" aria-hidden="true">🌟</div>
-                </div>
-
-                <h1 class="titulo-principal">
-                    Aventura<br><span>Inclusiva</span>
-                </h1>
-                <p class="subtitulo">
-                    Um espaço mágico, lúdico e acessível de aprendizado para <strong>todas as crianças</strong>.
-                </p>
-
-                <!-- Separador decorativo -->
-                <div class="separador">
-                    <span class="separador-texto">✦ Escolha seu modo de aprendizado ✦</span>
-                </div>
-
-                <!-- Grade de Perfis de Acessibilidade -->
-                <div class="card-acessibilidade-wrap" style="
-                    background: #faf5ff;
-                    border: 2px dashed #d8b4fe;
-                    border-radius: 24px;
-                    padding: 20px 16px;
-                    margin-bottom: 24px;
-                ">
-                    <p class="titulo-acesso" style="
-                        font-size: 15px;
-                        color: #6d28d9;
-                        font-weight: 600;
-                        margin-bottom: 16px;
-                        letter-spacing: 0.3px;
-                    ">🎨 Personalize sua experiência:</p>
-
-                    <div class="botoes-perfil" role="group" aria-label="Perfis de acessibilidade">
-
-                        <button onclick="mudarPerfil('padrao')"
-                                id="btn-padrao"
-                                class="btn-perfil card-opcao-perfil ativo"
-                                aria-pressed="true"
-                                aria-label="Modo Padrão — visual tradicional">
-                            <span class="emoji-botao" aria-hidden="true">✨</span>
-                            <span class="texto-botao">Modo Padrão</span>
-                            <small>Visual tradicional</small>
-                        </button>
-
-                        <button onclick="mudarPerfil('motor')"
-                                id="btn-motor"
-                                class="btn-perfil card-opcao-perfil"
-                                aria-pressed="false"
-                                aria-label="Modo Motor — botões grandes para facilitar o toque">
-                            <span class="emoji-botao" aria-hidden="true">⚡</span>
-                            <span class="texto-botao">Modo Motor</span>
-                            <small>Botões grandes</small>
-                        </button>
-
-                        <button onclick="mudarPerfil('visual')"
-                                id="btn-visual"
-                                class="btn-perfil card-opcao-perfil"
-                                aria-pressed="false"
-                                aria-label="Modo Visual — alto contraste com fundo preto e texto amarelo">
-                            <span class="emoji-botao" aria-hidden="true">👁️</span>
-                            <span class="texto-botao">Modo Visual</span>
-                            <small>Alto contraste</small>
-                        </button>
-
-                        <button onclick="mudarPerfil('libras')"
-                                id="btn-libras"
-                                class="btn-perfil card-opcao-perfil"
-                                aria-pressed="false"
-                                aria-label="Modo Libras — painel de sinais visuais em Libras">
-                            <span class="emoji-botao" aria-hidden="true">🤟</span>
-                            <span class="texto-botao">Modo Libras</span>
-                            <small>Sinais visuais</small>
-                        </button>
-
-                    </div>
-                </div>
-
-                <!-- Botão Principal de Destaque -->
-                <button onclick="iniciarJogo()"
-                        class="btn-entrar-aventura"
-                        aria-label="Entrar na Aventura e iniciar os jogos educativos">
-                    <span>🚀</span>
-                    <span>Entrar na Aventura!</span>
-                </button>
-
-            </div>
+    <!-- Cenário Lúdico de Fundo com Nuvens e Estrelas Flutuantes -->
+    <div class="cenario-fundo" aria-hidden="true">
+        <div class="nuvem nuvem-1"></div>
+        <div class="nuvem nuvem-2"></div>
+        <div class="nuvem nuvem-3"></div>
+        <div class="estrelas-brilhantes">
+            <span class="astro-deco estrela-1">✨</span>
+            <span class="astro-deco estrela-2">⭐</span>
+            <span class="astro-deco estrela-3">🌟</span>
+            <span class="astro-deco estrela-4">✨</span>
+            <span class="astro-deco planeta-1">🪐</span>
         </div>
-    </div><!-- /tela-inicio -->
-
-
-    <!-- ================================================================
-         TELA 2 — MENU DE FASES / AVENTURAS EDUCATIVAS
-         ================================================================ -->
-    <div id="tela-fases" class="tela" aria-hidden="true">
-        <div class="card-principal">
-            <div class="card-topo-deco"></div>
-            <div class="card-corpo">
-
-                <!-- Header com título, placar e botão voltar -->
-                <div class="tela2-header">
-                    <div>
-                        <p style="font-size:14px;color:#94a3b8;font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.8px;">Suas Aventuras</p>
-                        <h2 class="tela2-titulo">🗺️ Escolha uma Fase</h2>
-                    </div>
-                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
-                        <span class="badge-estrela" aria-live="polite" aria-label="Pontuação atual em estrelas">
-                            ⭐ <strong id="contador-estrelas">0</strong> estrelas
-                        </span>
-                        <button onclick="voltarInicio()" class="btn-voltar" aria-label="Voltar para a tela inicial">
-                            ← Início
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Grade de Fases -->
-                <div class="grade-fases" role="navigation" aria-label="Fases do jogo disponíveis">
-
-                    <button onclick="carregarFase(1)" class="btn-fase card-fase" aria-label="Iniciar Fase 1: Cores Divertidas">
-                        <div class="fase-esquerda">
-                            <div class="fase-icone-wrap" aria-hidden="true">🎨</div>
-                            <div class="fase-info">
-                                <p class="fase-numero">Fase 1</p>
-                                <p class="fase-nome">Cores Divertidas</p>
-                            </div>
-                        </div>
-                        <span class="fase-seta" aria-hidden="true">→</span>
-                    </button>
-
-                    <button onclick="carregarFase(2)" class="btn-fase card-fase" aria-label="Iniciar Fase 2: Leitura e Símbolos">
-                        <div class="fase-esquerda">
-                            <div class="fase-icone-wrap" aria-hidden="true">📚</div>
-                            <div class="fase-info">
-                                <p class="fase-numero">Fase 2</p>
-                                <p class="fase-nome">Leitura e Símbolos</p>
-                            </div>
-                        </div>
-                        <span class="fase-seta" aria-hidden="true">→</span>
-                    </button>
-
-                    <button onclick="carregarFase(3)" class="btn-fase card-fase" aria-label="Iniciar Fase 3: Nome de Objetos">
-                        <div class="fase-esquerda">
-                            <div class="fase-icone-wrap" aria-hidden="true">🧸</div>
-                            <div class="fase-info">
-                                <p class="fase-numero">Fase 3</p>
-                                <p class="fase-nome">Nome de Objetos</p>
-                            </div>
-                        </div>
-                        <span class="fase-seta" aria-hidden="true">→</span>
-                    </button>
-
-                    <button onclick="carregarFase(4)" class="btn-fase card-fase" aria-label="Iniciar Fase 4: Contagem Mágica">
-                        <div class="fase-esquerda">
-                            <div class="fase-icone-wrap" aria-hidden="true">🔢</div>
-                            <div class="fase-info">
-                                <p class="fase-numero">Fase 4</p>
-                                <p class="fase-nome">Contagem Mágica</p>
-                            </div>
-                        </div>
-                        <span class="fase-seta" aria-hidden="true">→</span>
-                    </button>
-
-                    <button onclick="carregarFase(5)" class="btn-fase card-fase" aria-label="Iniciar Fase 5: Primeiros Sinais em Libras">
-                        <div class="fase-esquerda">
-                            <div class="fase-icone-wrap" aria-hidden="true">🤟</div>
-                            <div class="fase-info">
-                                <p class="fase-numero">Fase 5</p>
-                                <p class="fase-nome">Primeiros Sinais em Libras</p>
-                            </div>
-                        </div>
-                        <span class="fase-seta" aria-hidden="true">→</span>
-                    </button>
-
-                </div>
-
-            </div>
-        </div>
-    </div><!-- /tela-fases -->
-
-
-    <!-- ================================================================
-         TELA 3 — TELA DE JOGO INTERATIVA
-         ================================================================ -->
-    <div id="tela-jogo" class="tela" aria-hidden="true">
-        <div class="card-principal">
-            <div class="card-topo-deco"></div>
-            <div class="card-corpo">
-
-                <!-- Header do Jogo -->
-                <div class="jogo-header">
-                    <h3 id="titulo-fase" class="jogo-titulo">Fase 1</h3>
-                    <button onclick="falarInstrucaoAtual()"
-                            class="btn-audio"
-                            aria-label="Ouvir a instrução da pergunta em voz alta">
-                        🔊 Ouvir
-                    </button>
-                </div>
-
-                <!-- Painel de Apoio Visual em Libras (exibido só no Modo Libras) -->
-                <div id="painel-libras"
-                     class="painel-libras escondido"
-                     role="note"
-                     aria-label="Sinal de apoio em Libras para esta questão">
-                    <span id="icone-sinal" style="font-size:40px;" aria-hidden="true">🤟</span>
-                    <p id="texto-sinal-libras" class="dica-libras">Sinal de Apoio</p>
-                </div>
-
-                <!-- Instrução / Pergunta da Questão -->
-                <p id="instrucao-texto" class="texto-instrucao">Carregando desafio...</p>
-
-                <!-- Contêiner de Alternativas (preenchido dinamicamente) -->
-                <div id="opcoes-container"
-                     class="opcoes-minijogo"
-                     role="group"
-                     aria-label="Opções de resposta para a questão atual">
-                </div>
-
-                <!-- Bloco de Feedback (Acerto Celebrado / Erro Acolhedor) -->
-                <div id="feedback-container"
-                     class="escondido"
-                     role="region"
-                     aria-live="polite"
-                     aria-atomic="true">
-
-                    <!-- Mascote Expressivo -->
-                    <div class="feedback-mascote-wrap">
-                        <span id="boneco-feedback" class="boneco-animado" aria-hidden="true"></span>
-                    </div>
-
-                    <!-- Conteúdo do Feedback (preenchido dinamicamente) -->
-                    <div id="feedback-conteudo"></div>
-
-                    <!-- Botões de Ação do Feedback (preenchidos dinamicamente) -->
-                    <div id="feedback-acoes" class="feedback-acoes">
-                        <button onclick="proximaRodada()"
-                                class="btn-proximo-fase"
-                                id="btn-proximo">
-                            Continuar Aventura ✨
-                        </button>
-                    </div>
-
-                </div><!-- /feedback-container -->
-
-                <!-- Rodapé da Tela de Jogo -->
-                <div class="divisor-sair">
-                    <button onclick="voltarFases()"
-                            class="btn-voltar-fases"
-                            id="btn-sair-fase"
-                            aria-label="Sair desta fase e voltar ao menu de aventuras">
-                        ← Escolher Outra Fase
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </div><!-- /tela-jogo -->
-
-</div><!-- /wrapper-central -->
-
-
-<!-- ================================================================
-     Widget Oficial do VLibras — Governo Federal
-     (Tradução em Libras para todo o conteúdo da página)
-     ================================================================ -->
-<div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-        <div class="vw-plugin-top-wrapper"></div>
     </div>
-</div>
-<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-<script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
 
-<!-- Lógica principal do jogo -->
-<script src="script.js"></script>
+    <!-- Região Principal do Jogo (SPA) -->
+    <main class="wrapper-central" role="main">
+
+        <!-- ================================================================
+             TELA 1: BOAS-VINDAS E PERFIS DE ACESSIBILIDADE
+             ================================================================ -->
+        <section id="tela-inicio" class="tela ativa" aria-label="Tela Inicial de Boas-Vindas">
+            <div class="card-jogo card-inicio">
+                
+                <!-- Faixa Colorida Estilo Arco-Íris -->
+                <div class="faixa-arco-iris" aria-hidden="true"></div>
+
+                <div class="conteudo-card">
+                    <!-- Cabeçalho de Acolhimento -->
+                    <header class="cabecalho-boas-vindas">
+                        <span class="badge-boas-vindas">
+                            <span class="emoji-saltitante" aria-hidden="true">🌈</span>
+                            <span>Universo Mágico do Saber</span>
+                        </span>
+
+                        <!-- Mascote Estrelinha Mágica Interativa -->
+                        <div class="bloco-mascote-topo" onclick="interagirMascote()" role="button" tabindex="0" aria-label="Mascote Estrelinha Mágica. Toque para ouvi-la falar com carinho!">
+                            <div class="halo-mascote" aria-hidden="true"></div>
+                            <span class="mascote-estrela" id="mascote-topo" aria-hidden="true">🌟</span>
+                            <div class="sombra-mascote" aria-hidden="true"></div>
+                            <span class="fala-balao-mascote" id="balao-mascote" aria-live="polite">Oi, amiguinho! Vamos brincar e aprender juntinhos? ✨</span>
+                        </div>
+
+                        <!-- Título Lúdico com Relevo -->
+                        <h1 class="titulo-jogo">
+                            Aventura <span class="destaque-colorido">Inclusiva</span>
+                        </h1>
+                        <p class="subtitulo-jogo">
+                            Um jogo divertido, acolhedor e acessível para <strong>todas as crianças</strong> brilharem com alegria! 💖
+                        </p>
+                    </header>
+
+                    <!-- Painel de Personalização / Perfis de Acessibilidade -->
+                    <section class="secao-perfis" aria-labelledby="titulo-perfis">
+                        <div class="divisor-ludico" aria-hidden="true">
+                            <span class="divisor-icone">✦</span>
+                            <span class="divisor-texto" id="titulo-perfis">Escolha o seu Super Poder:</span>
+                            <span class="divisor-icone">✦</span>
+                        </div>
+
+                        <div class="grade-botoes-perfil" role="group" aria-label="Opções de perfis de acessibilidade">
+                            
+                            <!-- Botão Modo Padrão -->
+                            <button type="button"
+                                    id="btn-padrao"
+                                    class="btn-perfil ativo"
+                                    onclick="mudarPerfil('padrao')"
+                                    aria-pressed="true"
+                                    aria-label="Super Poder Padrão: Cores alegres e visual encantador">
+                                <div class="icone-perfil-wrap" aria-hidden="true">✨</div>
+                                <div class="perfil-rotulo">
+                                    <strong class="nome-modo">Padrão</strong>
+                                    <span class="desc-modo">Cores alegres e lúdicas</span>
+                                </div>
+                                <span class="tag-status" aria-hidden="true">Ativo</span>
+                            </button>
+
+                            <!-- Botão Modo Motor -->
+                            <button type="button"
+                                    id="btn-motor"
+                                    class="btn-perfil"
+                                    onclick="mudarPerfil('motor')"
+                                    aria-pressed="false"
+                                    aria-label="Super Poder Motor: Botões gigantes e toque super fácil">
+                                <div class="icone-perfil-wrap" aria-hidden="true">⚡</div>
+                                <div class="perfil-rotulo">
+                                    <strong class="nome-modo">Modo Motor</strong>
+                                    <span class="desc-modo">Botões gigantes para tocar fácil</span>
+                                </div>
+                                <span class="tag-status" aria-hidden="true">Ativo</span>
+                            </button>
+
+                            <!-- Botão Modo Visual (Alto Contraste) -->
+                            <button type="button"
+                                    id="btn-visual"
+                                    class="btn-perfil"
+                                    onclick="mudarPerfil('visual')"
+                                    aria-pressed="false"
+                                    aria-label="Super Poder Visual: Fundo escuro e cores brilhantes para enxergar melhor">
+                                <div class="icone-perfil-wrap" aria-hidden="true">👁️</div>
+                                <div class="perfil-rotulo">
+                                    <strong class="nome-modo">Alto Contraste</strong>
+                                    <span class="desc-modo">Fundo preto e cores de alto contraste</span>
+                                </div>
+                                <span class="tag-status" aria-hidden="true">Ativo</span>
+                            </button>
+
+                            <!-- Botão Modo Libras -->
+                            <button type="button"
+                                    id="btn-libras"
+                                    class="btn-perfil"
+                                    onclick="mudarPerfil('libras')"
+                                    aria-pressed="false"
+                                    aria-label="Super Poder Libras: Cartões com sinais visuais das mãozinhas em todas as fases">
+                                <div class="icone-perfil-wrap" aria-hidden="true">🤟</div>
+                                <div class="perfil-rotulo">
+                                    <strong class="nome-modo">Modo Libras</strong>
+                                    <span class="desc-modo">Sinais visuais com as mãozinhas</span>
+                                </div>
+                                <span class="tag-status" aria-hidden="true">Ativo</span>
+                            </button>
+
+                        </div>
+                    </section>
+
+                    <!-- Botão de Ação Gigante de Entrada -->
+                    <div class="rodape-inicio">
+                        <button type="button"
+                                class="btn-acao-gigante btn-iniciar"
+                                onclick="iniciarJogo()"
+                                aria-label="Entrar na Aventura e explorar as categorias educativas">
+                            <span class="icone-foguete" aria-hidden="true">🚀</span>
+                            <span class="texto-btn-gigante">Entrar na Aventura!</span>
+                            <span class="brilho-btn" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================================================================
+             TELA 2: MENU DE CATEGORIAS E MAPA DE 10 FASES
+             ================================================================ -->
+        <section id="tela-fases" class="tela" aria-hidden="true" aria-label="Mapa de Aventuras e Fases">
+            <div class="card-jogo">
+                
+                <div class="faixa-arco-iris" aria-hidden="true"></div>
+
+                <div class="conteudo-card">
+                    
+                    <!-- Cabeçalho do Mapa com Placar e Voltar -->
+                    <header class="cabecalho-mapa">
+                        <div class="titulo-mapa-wrap">
+                            <span class="subtitulo-mapa" id="subtitulo-mapa-texto">Trilha de Conhecimento</span>
+                            <h2 class="titulo-secao" id="titulo-mapa-principal">🗺️ Escolha seu Mundo</h2>
+                        </div>
+
+                        <div class="painel-topo-acoes">
+                            <!-- Baú de Estrelas Mágicas -->
+                            <div class="bau-estrelas" role="status" aria-live="polite" aria-label="Total de estrelas mágicas conquistadas">
+                                <span class="estrela-giratoria" aria-hidden="true">⭐</span>
+                                <span class="valor-estrelas" id="contador-estrelas">0</span>
+                                <span class="legenda-estrelas">estrelas</span>
+                            </div>
+
+                            <!-- Botão Voltar -->
+                            <button type="button"
+                                    class="btn-navegacao-topo"
+                                    id="btn-voltar-topo"
+                                    onclick="gerenciarVoltarMapa()"
+                                    aria-label="Voltar para a tela anterior">
+                                <span aria-hidden="true">🏡</span> <span id="texto-btn-voltar">Início</span>
+                            </button>
+                        </div>
+                    </header>
+
+                    <!-- SUB-TELA 2A: Grade das 5 Categorias Principais -->
+                    <nav id="visao-categorias" class="grade-cartoes-fase" aria-label="Categorias educativas disponíveis">
+                        
+                        <!-- Categoria: Cores Divertidas -->
+                        <button type="button"
+                                class="cartao-fase fase-1"
+                                onclick="abrirCategoria('cores')"
+                                aria-label="Categoria Cores Divertidas. 10 fases de reconhecimento de cores!">
+                            <div class="icone-fase-circulo" aria-hidden="true">🎨</div>
+                            <div class="dados-fase">
+                                <span class="etiqueta-fase">10 Fases Mágicas</span>
+                                <h3 class="nome-fase">Cores Divertidas</h3>
+                                <p class="desc-fase">Do azul do céu às misturas mágicas do arco-íris!</p>
+                            </div>
+                            <div class="selo-ir" aria-hidden="true">
+                                <span id="status-cat-cores">Jogar</span>
+                                <span class="seta-ludica">➔</span>
+                            </div>
+                        </button>
+
+                        <!-- Categoria: Leitura e Letramento -->
+                        <button type="button"
+                                class="cartao-fase fase-2"
+                                onclick="abrirCategoria('letramento')"
+                                aria-label="Categoria Leitura e Letramento. 10 fases de vogais, palavras e historinhas!">
+                            <div class="icone-fase-circulo" aria-hidden="true">📚</div>
+                            <div class="dados-fase">
+                                <span class="etiqueta-fase">10 Fases Mágicas</span>
+                                <h3 class="nome-fase">Leitura e Letramento</h3>
+                                <p class="desc-fase">Vogais, bichinhos, rimas e palavrinhas com carinho!</p>
+                            </div>
+                            <div class="selo-ir" aria-hidden="true">
+                                <span id="status-cat-letramento">Jogar</span>
+                                <span class="seta-ludica">➔</span>
+                            </div>
+                        </button>
+
+                        <!-- Categoria: Nome de Objetos -->
+                        <button type="button"
+                                class="cartao-fase fase-3"
+                                onclick="abrirCategoria('objetos')"
+                                aria-label="Categoria Nome de Objetos e Cotidiano. 10 fases descobrindo coisas legais!">
+                            <div class="icone-fase-circulo" aria-hidden="true">🧸</div>
+                            <div class="dados-fase">
+                                <span class="etiqueta-fase">10 Fases Mágicas</span>
+                                <h3 class="nome-fase">Objetos e Cotidiano</h3>
+                                <p class="desc-fase">Descubra para que serve cada objeto do nosso dia!</p>
+                            </div>
+                            <div class="selo-ir" aria-hidden="true">
+                                <span id="status-cat-objetos">Jogar</span>
+                                <span class="seta-ludica">➔</span>
+                            </div>
+                        </button>
+
+                        <!-- Categoria: Contagem Mágica -->
+                        <button type="button"
+                                class="cartao-fase fase-4"
+                                onclick="abrirCategoria('contagem')"
+                                aria-label="Categoria Contagem Mágica e Números. 10 fases contando de 1 a 10!">
+                            <div class="icone-fase-circulo" aria-hidden="true">🔢</div>
+                            <div class="dados-fase">
+                                <span class="etiqueta-fase">10 Fases Mágicas</span>
+                                <h3 class="nome-fase">Contagem Mágica</h3>
+                                <p class="desc-fase">Aprenda a contar de 1 até 10 de um jeito muito fácil!</p>
+                            </div>
+                            <div class="selo-ir" aria-hidden="true">
+                                <span id="status-cat-contagem">Jogar</span>
+                                <span class="seta-ludica">➔</span>
+                            </div>
+                        </button>
+
+                        <!-- Categoria: Primeiros Sinais em Libras -->
+                        <button type="button"
+                                class="cartao-fase fase-5"
+                                onclick="abrirCategoria('libras')"
+                                aria-label="Categoria Primeiros Sinais em Libras. 10 fases aprendendo a falar com as mãos!">
+                            <div class="icone-fase-circulo" aria-hidden="true">🤟</div>
+                            <div class="dados-fase">
+                                <span class="etiqueta-fase">10 Fases Especiais</span>
+                                <h3 class="nome-fase">Primeiros Sinais em Libras</h3>
+                                <p class="desc-fase">Amor, obrigado, amizade e gestos que acolhem o coração!</p>
+                            </div>
+                            <div class="selo-ir" aria-hidden="true">
+                                <span id="status-cat-libras">Jogar</span>
+                                <span class="seta-ludica">➔</span>
+                            </div>
+                        </button>
+
+                    </nav>
+
+                    <!-- SUB-TELA 2B: Trilha das 10 Fases da Categoria Selecionada (Injetada dinamicamente) -->
+                    <div id="visao-trilha-fases" class="escondido" aria-label="Trilha de 10 Fases da Categoria">
+                        <div class="barra-info-categoria">
+                            <span id="icone-categoria-ativa" class="icone-cat-destaque" aria-hidden="true">🎨</span>
+                            <div class="texto-cat-info">
+                                <h3 id="nome-categoria-ativa" class="titulo-cat-destaque">Cores Divertidas</h3>
+                                <p id="progresso-categoria-texto" class="resumo-estrelas-cat">⭐ 0 de 10 estrelas conquistadas</p>
+                            </div>
+                        </div>
+
+                        <!-- Grade Dinâmica das 10 Fases (Chunky Cards com status de bloqueio) -->
+                        <div id="grade-10-fases" class="grade-10-fases-grid" role="navigation" aria-label="Seletor de 10 Fases">
+                            <!-- Injetado dinamicamente pelo script.js -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================================================================
+             TELA 3: TELA DE JOGO DINÂMICA E INTERATIVA
+             ================================================================ -->
+        <section id="tela-jogo" class="tela" aria-hidden="true" aria-label="Área de Desafio do Jogo">
+            <div class="card-jogo">
+                
+                <div class="faixa-arco-iris" aria-hidden="true"></div>
+
+                <div class="conteudo-card">
+                    
+                    <!-- Barra de Informações do Desafio -->
+                    <header class="cabecalho-jogo">
+                        <div class="fase-info-box">
+                            <span class="tag-etapa" id="indicador-rodada">Fase 1 de 10</span>
+                            <h2 id="titulo-fase" class="titulo-fase-jogo">Cores Divertidas — Fase 1</h2>
+                        </div>
+
+                        <!-- Botão de Narração Feminina Suave -->
+                        <div class="controles-audio-jogo">
+                            <button type="button"
+                                    class="btn-audio-leitura"
+                                    id="btn-ouvir-pergunta"
+                                    onclick="falarInstrucaoAtual()"
+                                    aria-label="Ouvir a pergunta em voz alta com narração carinhosa">
+                                <span class="icone-som" aria-hidden="true">🔊</span>
+                                <span class="texto-som">Ouvir Pergunta</span>
+                            </button>
+                        </div>
+                    </header>
+
+                    <!-- Cartão Visual de Apoio em Libras (Modo Libras ou Categoria Libras) -->
+                    <aside id="painel-libras"
+                           class="cartao-apoio-libras escondido"
+                           role="note"
+                           aria-label="Demonstração visual do sinal em Libras">
+                        <div class="libras-topo-identificador">
+                            <span class="icone-mao-libras" aria-hidden="true">🤟</span>
+                            <span class="titulo-libras-apoio">Sinal em Libras para aprender:</span>
+                        </div>
+                        <div class="libras-corpo-sinal">
+                            <div class="libras-gesto-ilustrado" id="libras-gesto-emoji" aria-hidden="true">✨</div>
+                            <div class="libras-explicacao-ludica">
+                                <strong id="libras-nome-sinal" class="nome-sinal-destaque">Sinal de Amizade</strong>
+                                <p id="texto-sinal-libras" class="descricao-gesto-libras">
+                                    Coloque a mãozinha aberta com carinho sobre o seu coração!
+                                </p>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- Balão da Pergunta do Desafio -->
+                    <div class="balao-pergunta-jogo" id="bloco-pergunta">
+                        <span class="personagem-pergunta" aria-hidden="true">⭐</span>
+                        <div class="pergunta-conteudo">
+                            <span class="dica-pergunta-topo">Preste atenção com carinho:</span>
+                            <p id="instrucao-texto" class="texto-pergunta">Carregando o desafio...</p>
+                        </div>
+                    </div>
+
+                    <!-- Grade Dinâmica de Opções de Resposta (Chunky Buttons) -->
+                    <div id="opcoes-container"
+                         class="grade-opcoes-jogo"
+                         role="group"
+                         aria-label="Escolha a resposta certa tocando em um dos botões abaixo:">
+                        <!-- Injetado dinamicamente pelo script.js -->
+                    </div>
+
+                    <!-- ========================================================
+                         BLOCO DE FEEDBACK DINÂMICO (Acerto ou Erro Acolhedor)
+                         ======================================================== -->
+                    <div id="feedback-container"
+                         class="escondido"
+                         role="region"
+                         aria-live="polite"
+                         aria-atomic="true">
+                        
+                        <!-- Mascote Expressivo com Animação Fofa -->
+                        <div class="feedback-mascote-area">
+                            <div class="circulo-luz-feedback" aria-hidden="true"></div>
+                            <span id="boneco-feedback" class="boneco-animado" aria-hidden="true">🥳</span>
+                        </div>
+
+                        <!-- Caixa de Texto do Feedback (Sucesso ou Dica Carinhosa) -->
+                        <div id="feedback-conteudo" class="feedback-card-texto">
+                            <!-- Injetado dinamicamente -->
+                        </div>
+
+                        <!-- Botões de Ação para Continuar -->
+                        <div id="feedback-acoes" class="acoes-feedback-botoes">
+                            <!-- Injetado dinamicamente -->
+                        </div>
+
+                    </div><!-- /feedback-container -->
+
+                    <!-- Rodapé com Botão de Voltar à Trilha -->
+                    <footer class="rodape-jogo-navegacao">
+                        <button type="button"
+                                class="btn-retornar-mapa"
+                                id="btn-sair-fase"
+                                onclick="voltarParaTrilhaFases()"
+                                aria-label="Voltar para a trilha de fases desta categoria">
+                            <span>🗺️</span> Ver Todas as 10 Fases
+                        </button>
+                    </footer>
+
+                </div>
+            </div>
+        </section>
+
+    </main><!-- /wrapper-central -->
+
+
+    <!-- ================================================================
+         WIDGET OFICIAL DO VLIBRAS (Governo Federal)
+         Tradução estrutural de textos para Libras
+         ================================================================ -->
+    <div vw class="enabled" aria-label="Widget VLibras para tradução da página em Língua Brasileira de Sinais">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        // Inicialização resiliente do VLibras
+        try {
+            new window.VLibras.Widget('https://vlibras.gov.br/app');
+        } catch (e) {
+            console.warn('[VLibras] Modo autônomo/offline ativo:', e);
+        }
+    </script>
+
+    <!-- Script de Lógica do Jogo -->
+    <script src="script.js"></script>
 
 </body>
 </html>
